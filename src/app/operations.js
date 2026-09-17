@@ -3,6 +3,7 @@ import { createOverpassFeatureSource } from '../sources/overpassFeatures.js';
 import { createSurfaceServices } from './surfaceServices.js';
 import { createAnnotationResolver } from '../annotations/resolver.js';
 import { searchAndFlyTo } from '../locations.js';
+import { createPropertyMode } from '../land/propertyMode.js';
 
 /** Assemble application operations from the caller's request services. */
 export function createApplicationOperations({ requests, signal, eventTarget }) {
@@ -31,10 +32,12 @@ export function createApplicationOperations({ requests, signal, eventTarget }) {
     featureSource: features,
     signal,
   });
+  const propertyMode = createPropertyMode({ surface });
   return Object.freeze({
     requests,
     surface,
     annotationResolver,
+    propertyMode,
     searchAndFlyTo: (viewer, query, options = {}) =>
       searchAndFlyTo(viewer, query, {
         ...options,
