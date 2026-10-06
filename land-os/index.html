@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Land OS · Auction Radar</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f3f5f8;background:#080b10}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% -10%,#17243a 0,transparent 35%),#080b10}
+    a{color:#dce7ff;text-decoration:none}a:hover{text-decoration:underline}
+    .shell{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:28px 0 64px}
+    .hero{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:22px}
+    .kicker,.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:#8ea2c2}
+    h1{margin:5px 0 7px;font-size:clamp(36px,7vw,68px);line-height:.95;letter-spacing:-.045em}
+    .hero p{max-width:690px;margin:0;color:#9aa9bf}.as-of{color:#7f8da1;font-size:12px;white-space:nowrap}
+    .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px}.tab{flex:0 0 auto;padding:9px 12px;border:1px solid #283246;border-radius:999px;font-size:12px}.tab.active{border-color:#7389ae;background:#152033}.muted-tab{color:#69778d}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 12px}.summary{background:rgba(15,20,29,.86);border:1px solid #202b3b;border-radius:16px;padding:16px}.summary span{display:block;color:#7f8da1;font-size:12px}.summary strong{display:block;margin-top:8px;font-size:24px;letter-spacing:-.03em}
+    .filters{display:grid;grid-template-columns:2fr repeat(4,1fr) auto auto;gap:8px;align-items:end;background:rgba(10,14,21,.92);border:1px solid #202b3b;border-radius:16px;padding:12px;position:sticky;top:8px;z-index:5;backdrop-filter:blur(12px)}
+    label{color:#8391a6;font-size:11px}input,select,button{width:100%;margin-top:5px;background:#101722;color:#e9eef7;border:1px solid #2a3649;border-radius:10px;padding:9px 10px;font:inherit}button{cursor:pointer}.check{display:flex;align-items:center;gap:7px;padding:9px;white-space:nowrap}.check input{width:auto;margin:0}
+    .method-note{margin:12px 0;padding:13px 15px;border:1px solid #29364a;border-radius:14px;color:#9aa9bf;font-size:12px;line-height:1.5;background:rgba(18,25,36,.58)}.method-note b{color:#dbe5f4}
+    .property-list{display:grid;gap:11px}.property-card{border:1px solid #202b3b;border-radius:18px;padding:16px;background:linear-gradient(180deg,rgba(17,23,34,.96),rgba(10,14,21,.96));box-shadow:0 10px 28px rgba(0,0,0,.18)}
+    .card-head{display:flex;justify-content:space-between;gap:16px}h2{margin:5px 0 3px;font-size:20px;letter-spacing:-.02em}.location{margin:0;color:#8593a8;font-size:12px}.shortlist{width:42px;height:42px;margin:0;border-radius:50%;font-size:20px}.shortlist.active{background:#272312;border-color:#675d2c}
+    .metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:16px 0 10px}.metrics>div{background:#0b111a;border:1px solid #1e2938;border-radius:12px;padding:10px;min-width:0}.metrics span{display:block;color:#718096;font-size:10px;text-transform:uppercase;letter-spacing:.07em}.metrics strong{display:block;margin-top:5px;font-size:15px;overflow-wrap:anywhere}
+    .status-row,.risk-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.status-row span,.risk-pill,.clear-pill{border:1px solid #2a3649;background:#111923;color:#9aa9bf;border-radius:999px;padding:5px 8px;font-size:10px}
+    .band-strong{border-color:#2f6651!important;color:#a9e5c9!important}.band-investigate{border-color:#655b2f!important;color:#e3d49b!important}.band-caution,.risk-pill{border-color:#613d3d!important;color:#dfa3a3!important}.band-thin,.band-research{color:#91a0b6!important}.source-good{color:#a9e5c9!important}.source-warn{color:#d7c98f!important}
+    .valuation-note{margin:11px 0 8px;color:#a7b4c6;font-size:12px}.notes{color:#7f8da1;font-size:12px;line-height:1.45;margin:9px 0}.card-actions{display:flex;flex-wrap:wrap;gap:12px;padding-top:10px;border-top:1px solid #1b2533;font-size:12px}.muted{color:#59677c}.empty{border:1px dashed #2b3749;border-radius:16px;padding:40px;text-align:center;color:#728096}
+    @media(max-width:960px){.filters{grid-template-columns:repeat(3,1fr);position:static}.metrics{grid-template-columns:repeat(3,1fr)}}@media(max-width:640px){.shell{width:min(100% - 18px,1180px);padding-top:18px}.hero{display:block}.as-of{margin-top:12px}.summary-grid{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:repeat(2,1fr)}.filters label:first-child{grid-column:1/-1}.metrics{grid-template-columns:repeat(2,1fr)}h2{font-size:17px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div><div class="kicker">eTribe · local-first</div><h1>Land OS</h1><p>Property acquisition radar for bank-auction opportunities. Reserve price is not treated as market value.</p></div>
+      <div class="as-of">Data verified through <b>6 Oct 2026</b></div>
+    </header>
+    <nav class="tabs"><span class="tab muted-tab">Property Missions</span><span class="tab active">Auction Properties ≤ ₹50L</span><span class="tab muted-tab">Digital Twin</span><span class="tab muted-tab">Vastu / Design</span></nav>
+    <section class="summary-grid"><div class="summary"><span>Matches</span><strong id="count">0</strong></div><div class="summary"><span>Avg reserve</span><strong id="avg-reserve">—</strong></div><div class="summary"><span>Avg evidenced discount</span><strong id="avg-discount">—</strong></div><div class="summary"><span>Shortlisted</span><strong id="shortlist-count">0</strong></div></section>
+    <section class="filters">
+      <label>Search<input id="search" type="search" placeholder="Panvel, Goa, ICICI…" /></label>
+      <label>Region<select id="region"><option>All</option><option>MMR</option><option>Goa</option></select></label>
+      <label>Max reserve (₹L)<input id="max-reserve" type="number" min="1" max="50" value="50" /></label>
+      <label>Min discount<select id="min-discount"><option value="0">Any</option><option value="10">10%+</option><option value="15">15%+</option><option value="20">20%+</option><option value="25">25%+</option><option value="30">30%+</option></select></label>
+      <label>Sort<select id="sort"><option value="discount">Best discount</option><option value="date">Auction soonest</option><option value="reserve">Lowest reserve</option><option value="market">Highest est. value</option><option value="area">Largest area</option></select></label>
+      <label class="check"><input id="verified-only" type="checkbox" /> Lender-linked only</label>
+      <button id="reset" type="button">Reset</button>
+    </section>
+    <aside class="method-note"><b>“Real value” means estimated market value, not a guaranteed sale price.</b> A value appears only when a source publishes a defensible market discount/estimate. Otherwise the card says “Research needed.” All areas are displayed in m².</aside>
+    <section id="property-list" class="property-list"></section>
+  </main>
+  <script type="module">
+    const PROPERTIES = [
+      {id:"goa-north-sbi-278644",region:"Goa",district:"North Goa",locality:"Exact locality to verify",title:"Residential flat — North Goa",lender:"State Bank of India",reserve:7.8,emd:null,area:null,auction:"2026-10-15",possession:"Not stated",tier:"lender-linked",source:"https://xpertarc.com/auction-property/flat-in-north-goa-goa-sbi-state-bank-of-india-4",reportedDiscount:30,confidence:"low",notes:"Very low reserve for Goa. Verify exact address, area, title and sale notice before treating it as actionable."},
+      {id:"goa-ponda-icici-20261105",region:"Goa",district:"South Goa",locality:"Ponda",title:"Residential flat — Ponda",lender:"ICICI Bank",reserve:15,emd:1.5,area:53,auction:"2026-11-05",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/properties/state/goa/south-goa/ponda",reportedDiscount:null,confidence:"research-needed",notes:"Good entry price for Goa; exact building/address and market comparables still need verification."},
+      {id:"goa-varca-canara-20261029",region:"Goa",district:"South Goa",locality:"Varca",title:"Residential flat — Varca, Salcete",lender:"Canara Bank",reserve:37.57,emd:3.76,area:81,auction:"2026-10-29",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/deals/goa",reportedDiscount:17,confidence:"medium",notes:"Published below-market estimate exists; verify possession and encumbrances."},
+      {id:"goa-dabolim-canara-20261029",region:"Goa",district:"South Goa",locality:"Dabolim",title:"Residential flat — Dabolim, Mormugao",lender:"Canara Bank",reserve:45.5,emd:4.55,area:74,auction:"2026-10-29",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/deals/goa",reportedDiscount:12,confidence:"medium",notes:"Within ₹50L cap, but valuation spread is thinner than stronger auction candidates."},
+      {id:"thane-murbad-bandhivali-20261011",region:"MMR",district:"Thane",locality:"Bandhivali, Murbad",title:"Residential flat — Bandhivali, Murbad",lender:"Motilal Oswal Home Finance",reserve:3,emd:.3,area:null,auction:"2026-10-11",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction-properties-under/25-lakh/in/mumbai",reportedDiscount:25,confidence:"medium",notes:"Very low reserve. Area and possession need verification before the discount is actionable."},
+      {id:"thane-shahapur-ujjivan-20261017",region:"MMR",district:"Thane",locality:"Shahapur",title:"Residential flat — Shahapur",lender:"Ujjivan Small Finance Bank",reserve:3.81,emd:.381,area:52.49,auction:"2026-10-17",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction-properties-under/25-lakh/in/mumbai",reportedDiscount:null,confidence:"research-needed",notes:"Area converted from 565 sq ft. Market comparables still required."},
+      {id:"raigad-panvel-ujjivan-20261017",region:"MMR",district:"Raigad",locality:"Panvel",title:"Residential flat — Panvel",lender:"Ujjivan Small Finance Bank",reserve:5.86,emd:.586,area:36.88,auction:"2026-10-17",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction/flats/maharashtra/raigad",reportedDiscount:null,confidence:"research-needed",notes:"Reserve reduced. Area converted from 397 sq ft."},
+      {id:"raigad-karjat-ujjivan-20261017",region:"MMR",district:"Raigad",locality:"Karjat",title:"Residential flat — Karjat",lender:"Ujjivan Small Finance Bank",reserve:9.08,emd:.908,area:56.21,auction:"2026-10-17",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction/flats/maharashtra/raigad",reportedDiscount:null,confidence:"research-needed",notes:"Reserve reduced. Area converted from 605 sq ft."},
+      {id:"raigad-uran-canara-20261016",region:"MMR",district:"Raigad",locality:"Uran",title:"Residential flat — Uran",lender:"Canara Bank",reserve:14.98,emd:1.5,area:50.73,auction:"2026-10-16",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction/flats/maharashtra/raigad",reportedDiscount:27,confidence:"medium",notes:"Re-auction. Area converted from 546 sq ft."},
+      {id:"raigad-panvel-canara-1220-20261016",region:"MMR",district:"Raigad",locality:"Panvel",title:"Residential flat — Panvel",lender:"Canara Bank",reserve:12.2,emd:1.22,area:21.74,auction:"2026-10-16",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction/flats/maharashtra/raigad",reportedDiscount:28,confidence:"medium",notes:"Area converted from 234 sq ft."},
+      {id:"raigad-karjat-canara-1543-20261016",region:"MMR",district:"Raigad",locality:"Karjat",title:"Residential flat — Karjat",lender:"Canara Bank",reserve:15.43,emd:1.54,area:35.4,auction:"2026-10-16",possession:"Not stated",tier:"aggregator",source:"https://bankauctiondeals.com/auction/flats/maharashtra/raigad",reportedDiscount:25,confidence:"medium",notes:"Area converted from 381 sq ft."},
+      {id:"thane-ambarnath-joveli-20261031",region:"MMR",district:"Thane",locality:"Joveli, Ambarnath",title:"Blossom Height — Joveli, Ambarnath",lender:"Easy Home Finance",reserve:24.36,emd:2.44,area:null,auction:"2026-10-31",possession:"Not stated",tier:"aggregator",source:"https://cityair.in/auctions-in-thane.html",reportedDiscount:21,confidence:"medium",notes:"Exact area should be pulled from the statutory sale notice."},
+      {id:"palghar-bhayander-east-20261015",region:"MMR",district:"Palghar",locality:"Bhayander East",title:"Jay Govind Nagar CHSL — Bhayander East",lender:"Bank of Maharashtra",reserve:12.89,emd:1.289,area:54.25,auction:"2026-10-15",possession:"Symbolic",tier:"aggregator",source:"https://banksauctions.com/properties/42703-flat-in-palghar",reportedDiscount:null,confidence:"research-needed",notes:"Symbolic possession is a major execution risk. Area converted from 584 sq ft."},
+      {id:"palghar-boisar-icici-20261022",region:"MMR",district:"Palghar",locality:"Boisar",title:"Residential flat — Boisar",lender:"ICICI Bank",reserve:16.2,emd:null,area:null,auction:"2026-10-22",possession:"Not stated",tier:"lender-linked",source:"https://xpertarc.com/auction-property/flat-in-palghar-mumbai-maharashtra-icici-icici-bank-limited-7",reportedDiscount:30,confidence:"low",notes:"The listing exposes an official sale notice; exact area should be verified from it."}
+    ];
+    const q = (s) => document.querySelector(s);
+    const shortlistKey = "land-os-auction-shortlist-v1";
+    let shortlist = new Set(JSON.parse(localStorage.getItem(shortlistKey) || "[]"));
+    const finite = (v) => v == null || v === "" || !Number.isFinite(Number(v)) ? null : Number(v);
+    const money = (v) => { const n=finite(v); return n==null ? "—" : "₹"+n.toFixed(n>=10?1:2)+"L"; };
+    const sqm = (v) => { const n=finite(v); return n==null ? "—" : n.toFixed(n>=100?0:1)+" m²"; };
+    const market = (p) => finite(p.reportedDiscount) && p.reportedDiscount>0 ? p.reserve/(1-p.reportedDiscount/100) : null;
+    const discount = (p) => { const m=market(p); return m ? ((m-p.reserve)/m)*100 : null; };
+    const flags = (p) => { const out=[]; if(!p.possession||p.possession==="Not stated")out.push("Possession unverified"); if(String(p.possession).toLowerCase().includes("symbolic"))out.push("Symbolic possession"); if(finite(p.area)==null)out.push("Area missing"); if(p.tier==="aggregator")out.push("Original notice pending"); return out; };
+    const band = (p) => { const d=discount(p); const f=flags(p); if(d==null)return "Research"; if(f.includes("Symbolic possession"))return d>=30?"Investigate":"Caution"; if(d>=25&&f.length<=2)return "Strong"; if(d>=15)return "Investigate"; return "Thin"; };
+    const confidence = (p) => p.confidence==="medium"?"Medium confidence":p.confidence==="low"?"Low confidence":"Research needed";
+    const esc = (v) => String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    function rows(){
+      const text=q("#search").value.trim().toLowerCase(),reg=q("#region").value,max=Number(q("#max-reserve").value||50),min=Number(q("#min-discount").value||0),verified=q("#verified-only").checked;
+      let r=PROPERTIES.filter(p=>p.reserve<=max&&new Date(p.auction+"T23:59:59+05:30")>=new Date("2026-10-06T00:00:00+05:30"));
+      if(reg!=="All")r=r.filter(p=>p.region===reg); if(text)r=r.filter(p=>(p.title+" "+p.locality+" "+p.district+" "+p.lender).toLowerCase().includes(text)); if(verified)r=r.filter(p=>p.tier==="lender-linked"); if(min>0)r=r.filter(p=>discount(p)!=null&&discount(p)>=min);
+      const sorts={discount:(a,b)=>(discount(b)??-1)-(discount(a)??-1),date:(a,b)=>a.auction.localeCompare(b.auction),reserve:(a,b)=>a.reserve-b.reserve,market:(a,b)=>(market(b)??-1)-(market(a)??-1),area:(a,b)=>(b.area??-1)-(a.area??-1)};
+      return r.sort(sorts[q("#sort").value]||sorts.discount);
+    }
+    function card(p){
+      const d=discount(p),m=market(p),f=flags(p),b=band(p),star=shortlist.has(p.id)?"★":"☆",auctionDate=new Date(p.auction+"T11:00:00+05:30").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+      return '<article class="property-card"><div class="card-head"><div><div class="eyebrow">'+esc(p.region)+' · '+esc(p.district)+'</div><h2>'+esc(p.title)+'</h2><p class="location">'+esc(p.locality)+' · '+esc(p.lender)+'</p></div><button class="shortlist '+(shortlist.has(p.id)?"active":"")+'" data-id="'+esc(p.id)+'">'+star+'</button></div>'+
+      '<div class="metrics"><div><span>Reserve</span><strong>'+money(p.reserve)+'</strong></div><div><span>Est. market</span><strong>'+money(m)+'</strong></div><div><span>Indicative discount</span><strong>'+(d==null?"—":d.toFixed(0)+"%")+'</strong></div><div><span>Area</span><strong>'+sqm(p.area)+'</strong></div><div><span>EMD</span><strong>'+money(p.emd)+'</strong></div><div><span>Auction</span><strong>'+auctionDate+'</strong></div></div>'+
+      '<div class="status-row"><span class="band-'+b.toLowerCase()+'">'+b+'</span><span>'+esc(p.possession)+'</span><span>'+confidence(p)+'</span><span class="'+(p.tier==="lender-linked"?"source-good":"source-warn")+'">'+(p.tier==="lender-linked"?"Lender-linked source":"Aggregator source")+'</span></div>'+
+      '<div class="valuation-note"><b>Valuation:</b> '+(m?"derived from source-published below-market percentage · gross headroom "+money(m-p.reserve):"insufficient comparable evidence")+'</div><div class="risk-row">'+(f.length?f.map(x=>'<span class="risk-pill">'+esc(x)+'</span>').join(""):'<span class="clear-pill">No obvious feed-level flags</span>')+'</div><p class="notes">'+esc(p.notes)+'</p><div class="card-actions"><a href="'+esc(p.source)+'" target="_blank" rel="noreferrer">Auction source ↗</a><span class="muted">Original notice must be attached before bidding</span></div></article>';
+    }
+    function render(){
+      const r=rows(); q("#property-list").innerHTML=r.length?r.map(card).join(""):'<div class="empty">No matching upcoming properties.</div>'; q("#count").textContent=r.length;
+      q("#avg-reserve").textContent=r.length?money(r.reduce((s,p)=>s+p.reserve,0)/r.length):"—"; const ds=r.map(discount).filter(v=>v!=null); q("#avg-discount").textContent=ds.length?(ds.reduce((a,b)=>a+b,0)/ds.length).toFixed(0)+"%":"—"; q("#shortlist-count").textContent=[...shortlist].filter(id=>r.some(p=>p.id===id)).length;
+      document.querySelectorAll(".shortlist").forEach(btn=>btn.onclick=()=>{shortlist.has(btn.dataset.id)?shortlist.delete(btn.dataset.id):shortlist.add(btn.dataset.id);localStorage.setItem(shortlistKey,JSON.stringify([...shortlist]));render();});
+    }
+    ["#search","#region","#max-reserve","#min-discount","#verified-only","#sort"].forEach(s=>q(s).addEventListener(q(s).tagName==="SELECT"||q(s).type==="checkbox"?"change":"input",render));
+    q("#reset").onclick=()=>{q("#search").value="";q("#region").value="All";q("#max-reserve").value="50";q("#min-discount").value="0";q("#verified-only").checked=false;q("#sort").value="discount";render();};
+    render();
+  </script>
+</body>
+</html>
